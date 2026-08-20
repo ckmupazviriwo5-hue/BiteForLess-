@@ -1,0 +1,15 @@
+- [x] Setup Resources
+    - [x] Correct `colors.xml`
+    - [x] Update `themes.xml`
+    - [x] Create `ic_logo_bite.xml` (Human figure biting burger)
+- [x] Implement Splash Screen
+    - [x] Create `activity_splash.xml`
+    - [x] Create `SplashActivity.java` with animation
+- [x] Implement Auth Screens
+    - [x] Create `activity_login.xml`
+    - [x] Create `LoginActivity.java`
+    - [x] Create `activity_signup.xml`
+    - [x] Create `SignupActivity.java`
+- [x] Finalize Navigation & Manifest
+    - [x] Update `AndroidManifest.xml`
+    - [x] Verify flow and animations

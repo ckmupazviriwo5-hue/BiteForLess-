@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Food Colors -->
+    <color name="food_orange">#FF9800</color>
+    <color name="food_red">#F44336</color>
+    <color name="food_green">#4CAF50</color>
+    <color name="food_yellow">#FFEB3B</color>
+    <color name="food_brown">#795548</color>
+
+    <!-- Primary Theme Colors -->
+    <color name="primary">#FF9800</color>
+    <color name="secondary">#FFEB3B</color>
+    <color name="accent">#F44336</color>
+</resources>

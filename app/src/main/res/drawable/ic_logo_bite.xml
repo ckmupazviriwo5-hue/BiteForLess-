@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Burger (Bottom Bun) -->
+    <path
+        android:fillColor="#FF9800"
+        android:pathData="M110,130 L170,130 Q170,145 140,145 Q110,145 110,130 Z" />
+
+    <!-- Burger (Patty) -->
+    <path
+        android:fillColor="#795548"
+        android:pathData="M115,122 L165,122 Q165,128 140,128 Q115,128 115,122 Z" />
+
+    <!-- Burger (Top Bun) -->
+    <path
+        android:fillColor="#FF9800"
+        android:pathData="M110,120 L170,120 Q170,100 140,100 Q110,100 110,120 Z" />
+
+    <!-- Human Figure (Profile) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,150 Q40,80 80,80 Q90,80 100,90 L100,110 L90,115 L100,120 L100,140 Q90,150 80,150 Z" />
+
+    <!-- Eye -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M75,95 A2,2 0 1,1 71,95 A2,2 0 1,1 75,95" />
+
+</vector>

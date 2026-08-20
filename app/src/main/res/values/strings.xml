@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Bite for Less</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="create_account">Create Account</string>
+    <string name="no_account">Don\'t have an account? Sign Up</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="tagline">Rescuing Food, One Bite at a Time</string>
+    <string name="dashboard">Dashboard - Bite for Less</string>
+</resources>
