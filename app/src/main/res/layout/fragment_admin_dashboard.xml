@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_lg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="Admin overview (demo)"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Title"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:text="Simulated role — demo data only, not secure authorization."
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body"
+            android:textSize="12sp" />
+
+        <GridLayout
+            android:id="@+id/admin_metrics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingTop="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm" />
+
+        <TextView
+            android:id="@+id/admin_summary_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="Platform summary"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:padding="@dimen/spacing_sm">
+
+            <Button
+                android:id="@+id/admin_open_vendors"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xs"
+                android:text="Vendors" />
+
+            <Button
+                android:id="@+id/admin_open_listings"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xs"
+                android:text="Listings" />
+
+            <Button
+                android:id="@+id/admin_open_reservations"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xs"
+                android:text="Reservations" />
+
+            <Button
+                android:id="@+id/admin_open_customers"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xs"
+                android:text="Customers" />
+
+            <Button
+                android:id="@+id/admin_open_reviews"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xs"
+                android:text="Reviews" />
+
+            <Button
+                android:id="@+id/admin_open_log"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xs"
+                android:text="Activity log" />
+        </GridLayout>
+    </LinearLayout>
+</ScrollView>

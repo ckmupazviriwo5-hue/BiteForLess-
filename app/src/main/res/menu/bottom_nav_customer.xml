@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_logo_bite"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_deals"
+        android:icon="@drawable/ic_logo_bite"
+        android:title="Deals" />
+    <item
+        android:id="@+id/nav_reservations"
+        android:icon="@drawable/ic_logo_bite"
+        android:title="Reserved" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_logo_bite"
+        android:title="Profile" />
+</menu>

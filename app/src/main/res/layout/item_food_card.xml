@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reusable food deal card for Phase 3 RecyclerView adapters. Not yet wired. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_md"
+    android:layout_marginTop="@dimen/spacing_sm"
+    android:layout_marginEnd="@dimen/spacing_md"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="@dimen/card_stroke_width">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_md">
+
+        <ImageView
+            android:id="@+id/deal_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="Deal image"
+            android:src="@drawable/ic_logo_bite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/deal_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@color/food_yellow"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingTop="2dp"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:paddingBottom="2dp"
+            android:text="-50%"
+            android:textAppearance="@style/TextAppearance.BiteForLess.DiscountBadge"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deal_image" />
+
+        <TextView
+            android:id="@+id/deal_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:text="Deal name"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Title"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/deal_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/deal_vendor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Vendor · Location"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/deal_name"
+            app:layout_constraintTop_toBottomOf="@id/deal_name" />
+
+        <TextView
+            android:id="@+id/deal_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="K25.00"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Price"
+            app:layout_constraintStart_toStartOf="@id/deal_name"
+            app:layout_constraintTop_toBottomOf="@id/deal_vendor" />
+
+        <TextView
+            android:id="@+id/deal_original_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:text="K50.00"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body"
+            app:layout_constraintBaseline_toBaselineOf="@id/deal_price"
+            app:layout_constraintStart_toEndOf="@id/deal_price" />
+
+        <TextView
+            android:id="@+id/deal_meta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="5 left · Collect by Fri"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/deal_name"
+            app:layout_constraintTop_toBottomOf="@id/deal_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

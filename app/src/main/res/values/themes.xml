@@ -2,11 +2,60 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BiteForLessFoodBridge" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/black</item>
         <item name="colorSecondary">@color/secondary</item>
-        <item name="android:windowBackground">@color/black</item>
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="colorError">@color/error</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="bottomNavigationStyle">@style/Widget.BiteForLess.BottomNavigation</item>
     </style>
 
     <style name="Theme.BiteForLessFoodBridge" parent="Base.Theme.BiteForLessFoodBridge" />
+
+    <!-- Splash theme for AndroidX SplashScreen -->
+    <style name="Theme.BiteForLessFoodBridge.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_bite</item>
+        <item name="postSplashScreenTheme">@style/Theme.BiteForLessFoodBridge</item>
+    </style>
+
+    <style name="Widget.BiteForLess.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.BiteForLess.BottomNavigation</item>
+    </style>
+
+    <style name="ThemeOverlay.BiteForLess.BottomNavigation" parent="">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnSurface">@color/text_secondary</item>
+        <item name="colorOnSurfaceVariant">@color/text_hint</item>
+    </style>
+
+    <style name="Widget.BiteForLess.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+    </style>
+
+    <style name="Widget.BiteForLess.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+    </style>
+
+    <style name="TextAppearance.BiteForLess.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/on_background</item>
+    </style>
+
+    <style name="TextAppearance.BiteForLess.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.BiteForLess.Price" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.BiteForLess.DiscountBadge" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

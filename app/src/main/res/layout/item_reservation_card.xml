@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_md"
+    android:layout_marginTop="@dimen/spacing_sm"
+    android:layout_marginEnd="@dimen/spacing_md"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="@dimen/card_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/res_ref"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RES-0001"
+                android:textAppearance="@style/TextAppearance.BiteForLess.Body"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/res_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RESERVED"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/res_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="Deal × 2"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Title"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/res_vendor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vendor · Location"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body" />
+
+        <TextView
+            android:id="@+id/res_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="K0.00"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Price" />
+
+        <TextView
+            android:id="@+id/res_meta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="Booked …"
+            android:textAppearance="@style/TextAppearance.BiteForLess.Body"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/res_cancel"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="Cancel reservation" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
