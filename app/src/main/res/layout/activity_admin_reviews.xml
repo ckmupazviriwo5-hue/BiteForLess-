@@ -12,14 +12,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/surface"
         app:navigationIcon="@drawable/ic_logo_bite"
-        app:title="Reviews (demo)"
+        app:title="Reviews"
         app:titleTextColor="@color/on_background" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_md"
-        android:text="Sample reviews for moderation demo — not verified purchases."
+        android:text="Moderate reviews — remove or restore as needed. Not a verified-purchase feed."
         android:textAppearance="@style/TextAppearance.BiteForLess.Body"
         android:textSize="12sp" />
 

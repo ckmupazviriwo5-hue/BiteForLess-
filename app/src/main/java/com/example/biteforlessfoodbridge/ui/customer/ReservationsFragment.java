@@ -64,7 +64,9 @@ public class ReservationsFragment extends Fragment implements ReservationAdapter
         TextView emptyTitle = root.findViewById(R.id.empty_title);
         emptyTitle.setText("No reservations yet");
         TextView emptySubtitle = root.findViewById(R.id.empty_subtitle);
-        emptySubtitle.setText("Your demo pickups will appear here.");
+        emptySubtitle.setText(live
+                ? "Reserved pickups appear here with their collection code."
+                : "Your demo pickups will appear here.");
         Button emptyAction = root.findViewById(R.id.empty_action);
         emptyAction.setVisibility(View.VISIBLE);
         emptyAction.setText("Browse deals");
@@ -129,9 +131,16 @@ public class ReservationsFragment extends Fragment implements ReservationAdapter
                                 List<ReservationAdapter.ReservationRow> rows = new ArrayList<>();
                                 for (Reservation r : mine) {
                                     FoodListing l = byId.get(r.getListingId());
-                                    String ln = l == null ? "Listing unavailable" : l.getName();
-                                    String vn = l == null ? ""
-                                            : names.getOrDefault(l.getVendorId(), "");
+                                    // Reservations on expired/sold listings are no
+                                    // longer in the catalog — the reservation row's
+                                    // own names keep the history readable.
+                                    String ln = l == null
+                                            ? (r.getFoodName().isEmpty()
+                                                    ? "Listing unavailable" : r.getFoodName())
+                                            : l.getName();
+                                    String vn = l == null ? r.getShopName()
+                                            : names.getOrDefault(l.getVendorId(),
+                                                    r.getShopName());
                                     rows.add(new ReservationAdapter.ReservationRow(r, ln, vn,
                                             l == null ? 0.0 : l.getDiscountedPrice(),
                                             l == null ? 0 : l.getCollectionDeadlineEpoch(),

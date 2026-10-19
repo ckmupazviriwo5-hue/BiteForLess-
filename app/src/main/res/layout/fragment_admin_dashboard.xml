@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_md"
             android:layout_marginTop="@dimen/spacing_md"
-            android:text="Admin overview (demo)"
+            android:text="Admin overview"
             android:textAppearance="@style/TextAppearance.BiteForLess.Title"
             android:textSize="20sp" />
 
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_md"
-            android:text="Simulated role — demo data only, not secure authorization."
+            android:text="Server-enforced admin authorization."
             android:textAppearance="@style/TextAppearance.BiteForLess.Body"
             android:textSize="12sp" />
 

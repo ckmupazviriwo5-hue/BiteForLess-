@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.example.biteforlessfoodbridge.data.SessionManager;
+import com.example.biteforlessfoodbridge.data.remote.AuthGateway;
 import com.example.biteforlessfoodbridge.data.remote.SupaResult;
 import com.example.biteforlessfoodbridge.data.remote.SupabaseAuth;
 import com.example.biteforlessfoodbridge.data.remote.SupabaseConfig;
@@ -33,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        live = SupabaseConfig.isConfigured();
-        supaAuth = new SupabaseAuth(this);
+        live = AuthGateway.isLive(this);
+        supaAuth = AuthGateway.auth(this);
 
         TextInputLayout emailLayout = findViewById(R.id.email_layout);
         TextInputLayout passwordLayout = findViewById(R.id.password_layout);
@@ -47,10 +48,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Live backend: real auth; role comes from the server profile.
         // Demo mode: simulated role picker as before.
+        // Google OAuth exists only on the hosted Supabase path — the local
+        // Express API has no OAuth, so the button stays hidden there.
         if (live) {
             roleGroup.setVisibility(View.GONE);
             findViewById(R.id.role_label).setVisibility(View.GONE);
-            btnGoogle.setVisibility(View.VISIBLE);
+            btnGoogle.setVisibility(!AuthGateway.isExpress(this)
+                    && SupabaseConfig.isConfigured() ? View.VISIBLE : View.GONE);
         }
 
         // Scale animation on touch
@@ -135,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
     /** Resolves the server-authoritative role, then enters the app. */
     private void afterLiveAuth(String email) {
         View overlay = LoadingOverlay.show(this);
+        String displayName = supaAuth.displayName();
         supaAuth.fetchRole(new SupaResult<String>() {
             @Override public void onSuccess(String role) {
                 LoadingOverlay.hide(overlay);
@@ -142,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                         : "vendor".equalsIgnoreCase(role) ? UserRole.VENDOR
                         : UserRole.CUSTOMER;
                 new SessionManager(LoginActivity.this)
-                        .signIn("", email == null ? "" : email, mapped);
+                        .signIn(displayName, email == null ? "" : email, mapped);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra(MainActivity.EXTRA_ROLE, mapped.name());
                 startActivity(intent);

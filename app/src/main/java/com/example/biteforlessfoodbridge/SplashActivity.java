@@ -11,9 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
 
 import com.example.biteforlessfoodbridge.data.SessionManager;
+import com.example.biteforlessfoodbridge.data.remote.AuthGateway;
 import com.example.biteforlessfoodbridge.data.remote.SupaResult;
-import com.example.biteforlessfoodbridge.data.remote.SupabaseAuth;
-import com.example.biteforlessfoodbridge.data.remote.SupabaseConfig;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -34,9 +33,9 @@ public class SplashActivity extends AppCompatActivity {
         logo.startAnimation(scaleAnimation);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (SupabaseConfig.isConfigured()) {
-                // Live backend: validate/refresh the stored session.
-                new SupabaseAuth(this).restore(new SupaResult<Boolean>() {
+            if (AuthGateway.isLive(this)) {
+                // Live backend: validate the stored session (local API or legacy).
+                AuthGateway.auth(this).restore(new SupaResult<Boolean>() {
                     @Override public void onSuccess(Boolean live) {
                         goTo(live ? MainActivity.class : LoginActivity.class);
                     }

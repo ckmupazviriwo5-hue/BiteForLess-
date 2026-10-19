@@ -29,4 +29,10 @@ public class Review {
     public long getCreatedAtEpoch() { return createdAtEpoch; }
     public ReviewStatus getStatus() { return status; }
     public void setStatus(ReviewStatus status) { this.status = status; }
+
+    /** Reviewer display name when the backend provides one. */
+    private String userName = "";
+
+    public String getUserName() { return userName; }
+    public void setUserName(String name) { this.userName = name == null ? "" : name; }
 }

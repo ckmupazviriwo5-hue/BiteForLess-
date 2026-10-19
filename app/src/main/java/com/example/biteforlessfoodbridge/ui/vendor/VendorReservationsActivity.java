@@ -105,7 +105,8 @@ public class VendorReservationsActivity extends AppCompatActivity
             FoodListing l = repo.getById(r.getListingId());
             String name = l == null ? "Listing unavailable" : l.getName();
             long deadline = l == null ? 0 : l.getCollectionDeadlineEpoch();
-            rows.add(new VendorReservationAdapter.VendorResRow(r, name, deadline));
+            rows.add(new VendorReservationAdapter.VendorResRow(r, name, deadline,
+                    r.getUserId()));
         }
         showRows(rows);
     }
@@ -132,11 +133,17 @@ public class VendorReservationsActivity extends AppCompatActivity
                                                 continue;
                                             }
                                             FoodListing l = byId.get(r.getListingId());
+                                            String name = l == null
+                                                    ? (r.getFoodName().isEmpty()
+                                                            ? "Listing unavailable"
+                                                            : r.getFoodName())
+                                                    : l.getName();
                                             rows.add(new VendorReservationAdapter.VendorResRow(
                                                     r,
-                                                    l == null ? "Listing unavailable" : l.getName(),
+                                                    name,
                                                     l == null ? 0 : l
-                                                            .getCollectionDeadlineEpoch()));
+                                                            .getCollectionDeadlineEpoch(),
+                                                    r.getCustomerName()));
                                         }
                                         showRows(rows);
                                     }
@@ -174,20 +181,43 @@ public class VendorReservationsActivity extends AppCompatActivity
 
     @Override
     public void onComplete(Reservation reservation) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Mark as picked up?")
-                .setMessage("Confirm " + (live ? "pickup" : "simulated pickup")
-                        + " for " + reservation.getId()
-                        + (live ? "?" : " (demo only — no verification)."))
-                .setPositiveButton("Confirm pickup", (d, w) -> {
-                    if (live) {
+        if (live) {
+            // The local API verifies pickups with the customer's 4-digit PIN
+            // (contract §6) — collect it before confirming.
+            final com.google.android.material.textfield.TextInputEditText pinInput =
+                    new com.google.android.material.textfield.TextInputEditText(this);
+            pinInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+            pinInput.setFilters(new android.text.InputFilter[]
+                    { new android.text.InputFilter.LengthFilter(4) });
+            pinInput.setHint("4-digit pickup PIN");
+            android.widget.LinearLayout wrap = new android.widget.LinearLayout(this);
+            wrap.setOrientation(android.widget.LinearLayout.VERTICAL);
+            int pad = (int) (16 * getResources().getDisplayMetrics().density);
+            wrap.setPadding(pad, pad / 2, pad, 0);
+            wrap.addView(pinInput);
+
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Verify pickup")
+                    .setMessage("Ask the customer for the 4-digit PIN shown on their "
+                            + "reservation " + (reservation.getPickupCode().isEmpty()
+                            ? "" : "(" + reservation.getPickupCode() + ") ")
+                            + "and enter it to mark the pickup as collected.")
+                    .setView(wrap)
+                    .setPositiveButton("Verify pickup", (d, w) -> {
+                        String pin = pinInput.getText() == null ? ""
+                                : pinInput.getText().toString().trim();
+                        if (pin.length() != 4) {
+                            Toast.makeText(this, "Enter the 4-digit PIN",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         View overlay = LoadingOverlay.show(this);
-                        RepositoryProvider.remote(this).rpcComplete(
-                                reservation.getId(), new SupaResult<String>() {
+                        RepositoryProvider.remote(this).verifyPickup(
+                                reservation.getId(), pin, new SupaResult<String>() {
                                     @Override public void onSuccess(String v) {
                                         LoadingOverlay.hide(overlay);
                                         Toast.makeText(VendorReservationsActivity.this,
-                                                "Pickup recorded", Toast.LENGTH_SHORT).show();
+                                                "Pickup verified", Toast.LENGTH_SHORT).show();
                                         refresh();
                                     }
                                     @Override public void onError(String m) {
@@ -197,8 +227,16 @@ public class VendorReservationsActivity extends AppCompatActivity
                                         refresh();
                                     }
                                 });
-                        return;
-                    }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+            return;
+        }
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Mark as picked up?")
+                .setMessage("Confirm simulated pickup for " + reservation.getId()
+                        + " (demo only — no verification).")
+                .setPositiveButton("Confirm pickup", (d, w) -> {
                     try {
                         repo.completeForVendor(reservation.getId(), vendorId);
                         Toast.makeText(this, "Pickup recorded (demo)", Toast.LENGTH_SHORT).show();

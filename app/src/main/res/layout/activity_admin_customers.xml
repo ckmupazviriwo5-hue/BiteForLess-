@@ -12,14 +12,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/surface"
         app:navigationIcon="@drawable/ic_logo_bite"
-        app:title="Customers (demo)"
+        app:title="Customers"
         app:titleTextColor="@color/on_background" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_md"
-        android:text="Observed demo activity only — not a user-registration database."
+        android:text="Observed platform activity — registrations happen on signup."
         android:textAppearance="@style/TextAppearance.BiteForLess.Body"
         android:textSize="12sp" />
 
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xs"
-            android:text="Demo customers appear after a reservation is made."
+            android:text="Customers appear here once they reserve a deal."
             android:textAppearance="@style/TextAppearance.BiteForLess.Body" />
     </LinearLayout>
 </LinearLayout>

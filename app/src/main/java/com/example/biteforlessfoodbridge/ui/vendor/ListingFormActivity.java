@@ -201,6 +201,14 @@ public class ListingFormActivity extends AppCompatActivity {
 
         findViewById(R.id.form_cancel).setOnClickListener(v -> finish());
         findViewById(R.id.form_save).setOnClickListener(v -> save());
+
+        if (live) {
+            // The local API derives the pickup area from the shop profile —
+            // shown for context but not editable, so edits can't be lost.
+            location.setEnabled(false);
+            locationLayout.setHelperText("Your shop's pickup area");
+            locationLayout.setHelperTextEnabled(true);
+        }
     }
 
     private void bindViews() {
@@ -309,8 +317,8 @@ public class ListingFormActivity extends AppCompatActivity {
         }
 
         Double discVal = parseDouble(discounted);
-        if (discVal == null || discVal < 0) {
-            discountedLayout.setError("Enter a valid price");
+        if (discVal == null || discVal <= 0) {
+            discountedLayout.setError("Sale price must be above K0");
             ok = false;
         } else {
             discountedLayout.setError(null);
@@ -323,8 +331,9 @@ public class ListingFormActivity extends AppCompatActivity {
         }
 
         Integer qtyVal = parseInt(qty);
-        if (qtyVal == null || qtyVal < 0) {
-            qtyLayout.setError("Enter 0 or more");
+        // The local API requires quantity > 0 on create AND update.
+        if (qtyVal == null || qtyVal < 1) {
+            qtyLayout.setError("Quantity must be at least 1");
             ok = false;
         } else {
             qtyLayout.setError(null);
@@ -340,6 +349,10 @@ public class ListingFormActivity extends AppCompatActivity {
 
         if (!ok) return;
 
+        if (categories.isEmpty()) {
+            showError("No food categories available — go back and retry");
+            return;
+        }
         int catPos = Math.max(0, category.getSelectedItemPosition());
         String categoryId = categories.get(Math.min(catPos, categories.size() - 1)).getId();
         long deadlineEpoch = resolveDeadline();
@@ -402,7 +415,6 @@ public class ListingFormActivity extends AppCompatActivity {
                     .put("currency", "ZMW")
                     .put("status", status == ListingStatus.ACTIVE ? "active" : "inactive");
             if (editing == null) {
-                fields.put("id", "vl-" + System.currentTimeMillis());
                 remote.createListing(fields, new SupaResult<FoodListing>() {
                     @Override public void onSuccess(FoodListing v) {
                         LoadingOverlay.hide(overlay);

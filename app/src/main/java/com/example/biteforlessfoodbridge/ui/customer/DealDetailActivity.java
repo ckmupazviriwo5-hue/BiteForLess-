@@ -23,6 +23,7 @@ import com.example.biteforlessfoodbridge.model.Reservation;
 import com.example.biteforlessfoodbridge.model.Vendor;
 import com.example.biteforlessfoodbridge.ui.common.LoadingOverlay;
 import com.example.biteforlessfoodbridge.util.DateTimeUtil;
+import com.example.biteforlessfoodbridge.util.FoodImage;
 import com.example.biteforlessfoodbridge.util.PriceFormat;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -59,6 +60,7 @@ public class DealDetailActivity extends AppCompatActivity {
     private TextView error;
     private View qtyRow;
     private Button reserve;
+    private android.widget.ImageView detailImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class DealDetailActivity extends AppCompatActivity {
         badge = findViewById(R.id.detail_badge);
         name = findViewById(R.id.detail_name);
         description = findViewById(R.id.detail_description);
+        detailImage = findViewById(R.id.detail_image);
         vendor = findViewById(R.id.detail_vendor);
         location = findViewById(R.id.detail_location);
         window = findViewById(R.id.detail_window);
@@ -182,6 +185,7 @@ public class DealDetailActivity extends AppCompatActivity {
 
         name.setText(listing.getName());
         description.setText(listing.getDescription());
+        FoodImage.load(detailImage, listing, listing.getImageUrl());
         vendor.setText(vendorName + " · " + categoryName);
         location.setText("Pickup: " + listing.getLocation());
         window.setText("Window: " + listing.getCollectionWindow());
@@ -252,11 +256,12 @@ public class DealDetailActivity extends AppCompatActivity {
         String vendorLabel = live
                 ? (liveVendorName.isEmpty() ? "Unknown vendor" : liveVendorName)
                 : repo.getVendorName(listing.getVendorId());
-        String message = "Reference: " + r.getId() + " (" + r.getPickupCode() + ")\n"
+        String message = "Reference: " + r.getPickupCode() + "\n"
                 + listing.getName() + " × " + r.getQuantity() + "\n"
                 + vendorLabel + "\n"
                 + "Total: " + PriceFormat.format(total) + "\n"
                 + "Pickup: " + listing.getLocation() + "\n"
+                + (r.getPickupPin().isEmpty() ? "" : "Pickup PIN: " + r.getPickupPin() + "\n")
                 + DateTimeUtil.formatDeadline(listing.getCollectionDeadlineEpoch()) + "\n"
                 + "Status: " + r.getStatus().name() + "\n\n"
                 + (live ? "Saved to your account — show this reference at pickup."

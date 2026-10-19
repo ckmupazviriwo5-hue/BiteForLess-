@@ -87,12 +87,14 @@ public class RemoteRepository {
     public static VendorStatus parseVendorStatus(String s) {
         if ("approved".equalsIgnoreCase(s)) return VendorStatus.APPROVED;
         if ("suspended".equalsIgnoreCase(s)) return VendorStatus.SUSPENDED;
+        if ("rejected".equalsIgnoreCase(s)) return VendorStatus.REJECTED;
         return VendorStatus.PENDING;
     }
 
     public static String vendorStatusToApi(VendorStatus s) {
         if (s == VendorStatus.APPROVED) return "approved";
         if (s == VendorStatus.SUSPENDED) return "suspended";
+        if (s == VendorStatus.REJECTED) return "rejected";
         return "pending";
     }
 
@@ -461,6 +463,15 @@ public class RemoteRepository {
             @Override public void onSuccess(JSONArray arr) { cb.onSuccess("ok"); }
             @Override public void onError(String message) { cb.onError(message); }
         };
+    }
+
+    /**
+     * Pickup verification hook. Supabase authorizes the RPC server-side and
+     * needs no secret; the local Express API requires the customer's 4-digit
+     * PIN (contract §6) — {@link ExpressRepository} overrides this.
+     */
+    public void verifyPickup(String reservationId, String pickupPin, SupaResult<String> cb) {
+        rpcComplete(reservationId, cb);
     }
 
     private static String encode(String s) {

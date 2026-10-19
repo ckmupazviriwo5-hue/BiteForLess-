@@ -65,7 +65,8 @@ public class AdminReservationAdapter extends RecyclerView.Adapter<AdminReservati
         h.ref.setText(r.getId() + " · " + r.getPickupCode());
         h.title.setText(row.listingName + " × " + r.getQuantity()
                 + " · " + PriceFormat.format(row.unitPrice * r.getQuantity()));
-        h.customer.setText("Customer (demo): " + r.getUserId() + " · " + row.vendorName);
+        h.customer.setText((r.getCustomerName().isEmpty() ? "Customer" : r.getCustomerName())
+                + " · " + row.vendorName);
         SimpleDateFormat fmt = new SimpleDateFormat("EEE d MMM, HH:mm", Locale.getDefault());
         h.meta.setText("Booked " + fmt.format(new Date(r.getCreatedAtEpoch()))
                 + " · " + DateTimeUtil.formatDeadline(row.deadlineEpoch));

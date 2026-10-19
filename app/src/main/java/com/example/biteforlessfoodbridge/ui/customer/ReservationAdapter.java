@@ -74,7 +74,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         ReservationRow row = rows.get(position);
         Reservation r = row.reservation;
 
-        h.ref.setText(r.getId() + " · " + r.getPickupCode());
+        h.ref.setText(r.getPickupCode().isEmpty() ? r.getId() : r.getPickupCode());
         h.title.setText(row.listingName + " × " + r.getQuantity());
         h.vendor.setText(row.vendorName + " · " + row.location);
         h.total.setText(PriceFormat.format(row.unitPrice * r.getQuantity()));

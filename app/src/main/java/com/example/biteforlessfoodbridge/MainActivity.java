@@ -16,8 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.biteforlessfoodbridge.data.DemoRepository;
 import com.example.biteforlessfoodbridge.data.SessionManager;
-import com.example.biteforlessfoodbridge.data.remote.SupabaseAuth;
-import com.example.biteforlessfoodbridge.data.remote.SupabaseConfig;
+import com.example.biteforlessfoodbridge.data.remote.AuthGateway;
 import com.example.biteforlessfoodbridge.model.UserRole;
 import com.example.biteforlessfoodbridge.ui.admin.AdminDashboardFragment;
 import com.example.biteforlessfoodbridge.ui.customer.DealsFragment;
@@ -62,8 +61,15 @@ public class MainActivity extends AppCompatActivity {
         session.setRole(role);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setSubtitle("Demo: " + role.name());
+        toolbar.setSubtitleTextColor(com.google.android.material.color.MaterialColors.getColor(
+                toolbar, com.google.android.material.R.attr.colorOnSurfaceVariant));
+        boolean liveBackend = AuthGateway.isLive(this);
+        toolbar.setSubtitle((liveBackend ? "Live: " : "Demo: ") + role.name());
         toolbar.setOnMenuItemClickListener(this::onToolbarItem);
+        if (liveBackend) {
+            // Demo data reset is meaningless against the real local database.
+            toolbar.getMenu().findItem(R.id.action_reset_demo).setVisible(false);
+        }
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         this.bottomNav = bottomNav;
@@ -143,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_sign_out) {
             session.signOut();
-            if (SupabaseConfig.isConfigured()) {
-                new SupabaseAuth(this).signOut();
+            if (AuthGateway.isLive(this)) {
+                AuthGateway.auth(this).signOut();
             }
             startActivity(new Intent(this, LoginActivity.class));
             finish();

@@ -123,8 +123,10 @@ public class AdminDashboardFragment extends Fragment {
     private void showSummary(AdminStats.Summary s, boolean demo) {
         metrics.removeAllViews();
         addMetric(String.valueOf(s.totalVendors), "Vendors");
-        addMetric(s.approvedVendors + " ok · " + s.suspendedVendors + " susp",
-                "Approved / suspended");
+        String states = s.approvedVendors + " ok · " + s.suspendedVendors + " susp";
+        if (s.rejectedVendors > 0) states += " · " + s.rejectedVendors + " rej";
+        if (s.pendingVendors > 0) states += " · " + s.pendingVendors + " pending";
+        addMetric(states, "Vendor states");
         addMetric(s.activeListings + "/" + s.totalListings, "Active listings");
         addMetric(String.valueOf(s.totalReservations), "Reservations");
         addMetric(String.valueOf(s.reservedQtyOutstanding), "Meals awaiting");

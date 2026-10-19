@@ -29,7 +29,8 @@ import java.util.List;
 /** Vendor directory: approve / suspend / reactivate with confirmations. */
 public class AdminVendorsActivity extends AppCompatActivity implements AdminVendorAdapter.Listener {
 
-    private static final String[] FILTERS = {"All", "Approved", "Pending", "Suspended"};
+    private static final String[] FILTERS =
+            {"All", "Approved", "Pending", "Rejected", "Suspended"};
 
     private DemoRepository repo;
     private String actor;
@@ -71,6 +72,7 @@ public class AdminVendorsActivity extends AppCompatActivity implements AdminVend
                 String label = chip == null ? "All" : chip.getText().toString();
                 if ("Approved".equals(label)) filter = VendorStatus.APPROVED;
                 else if ("Pending".equals(label)) filter = VendorStatus.PENDING;
+                else if ("Rejected".equals(label)) filter = VendorStatus.REJECTED;
                 else if ("Suspended".equals(label)) filter = VendorStatus.SUSPENDED;
                 else filter = null;
             }
@@ -184,55 +186,69 @@ public class AdminVendorsActivity extends AppCompatActivity implements AdminVend
 
     @Override
     public void onAction(Vendor vendor) {
+        if (vendor.getStatus() == VendorStatus.PENDING) {
+            // A pending application can be approved OR rejected.
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Review application")
+                    .setMessage("Decide on \"" + vendor.getName() + "\" (" + vendor.getLocation()
+                            + ").\n\nApproving lets the shop publish listings; rejecting "
+                            + "keeps its account inactive.")
+                    .setPositiveButton("Approve", (d, w) ->
+                            applyStatus(vendor, VendorStatus.APPROVED, "approve"))
+                    .setNeutralButton("Reject", (d, w) ->
+                            applyStatus(vendor, VendorStatus.REJECTED, "reject"))
+                    .setNegativeButton("Cancel", null)
+                    .show();
+            return;
+        }
         VendorStatus target;
         String verb;
         String extra = "";
-        if (vendor.getStatus() == VendorStatus.PENDING) {
-            target = VendorStatus.APPROVED;
-            verb = "approve";
-        } else if (vendor.getStatus() == VendorStatus.APPROVED) {
+        if (vendor.getStatus() == VendorStatus.APPROVED) {
             target = VendorStatus.SUSPENDED;
             verb = "suspend";
             extra = " Their listings stay visible but cannot take new orders;"
                     + " existing reservations are preserved.";
-        } else {
+        } else { // suspended or rejected → back to approved
             target = VendorStatus.APPROVED;
             verb = "reactivate";
         }
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Confirm")
                 .setMessage("Do you want to " + verb + " \"" + vendor.getName() + "\"?" + extra)
-                .setPositiveButton("Confirm", (d, w) -> {
-                    if (live) {
-                        View overlay = LoadingOverlay.show(this);
-                        RepositoryProvider.remote(this).rpcSetVendorStatus(
-                                vendor.getId(), target, new SupaResult<String>() {
-                                    @Override public void onSuccess(String v) {
-                                        LoadingOverlay.hide(overlay);
-                                        Toast.makeText(AdminVendorsActivity.this,
-                                                "Vendor " + verb + "d",
-                                                Toast.LENGTH_SHORT).show();
-                                        refresh();
-                                    }
-                                    @Override public void onError(String m) {
-                                        LoadingOverlay.hide(overlay);
-                                        Toast.makeText(AdminVendorsActivity.this, m,
-                                                Toast.LENGTH_LONG).show();
-                                        refresh();
-                                    }
-                                });
-                        return;
-                    }
-                    try {
-                        repo.setVendorStatus(vendor.getId(), target, actor);
-                        Toast.makeText(this, "Vendor " + verb + "d (demo)",
-                                Toast.LENGTH_SHORT).show();
-                    } catch (IllegalStateException e) {
-                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                    refresh();
-                })
+                .setPositiveButton("Confirm", (d, w) -> applyStatus(vendor, target, verb))
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+
+    private void applyStatus(Vendor vendor, VendorStatus target, String verb) {
+        if (live) {
+            View overlay = LoadingOverlay.show(this);
+            RepositoryProvider.remote(this).rpcSetVendorStatus(
+                    vendor.getId(), target, new SupaResult<String>() {
+                        @Override public void onSuccess(String v) {
+                            LoadingOverlay.hide(overlay);
+                            Toast.makeText(AdminVendorsActivity.this,
+                                    "Vendor " + verb + "d",
+                                    Toast.LENGTH_SHORT).show();
+                            refresh();
+                        }
+                        @Override public void onError(String m) {
+                            LoadingOverlay.hide(overlay);
+                            Toast.makeText(AdminVendorsActivity.this, m,
+                                    Toast.LENGTH_LONG).show();
+                            refresh();
+                        }
+                    });
+            return;
+        }
+        try {
+            repo.setVendorStatus(vendor.getId(), target, actor);
+            Toast.makeText(this, "Vendor " + verb + "d (demo)",
+                    Toast.LENGTH_SHORT).show();
+        } catch (IllegalStateException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        refresh();
     }
 }

@@ -14,6 +14,7 @@ import com.example.biteforlessfoodbridge.R;
 import com.example.biteforlessfoodbridge.model.FoodListing;
 import com.example.biteforlessfoodbridge.model.ListingStatus;
 import com.example.biteforlessfoodbridge.util.DateTimeUtil;
+import com.example.biteforlessfoodbridge.util.FoodImage;
 import com.example.biteforlessfoodbridge.util.PriceFormat;
 
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         boolean reservable = l.isReservable(now);
 
         h.image.setImageResource(R.drawable.ic_logo_bite);
+        FoodImage.load(h.image, l, l.getImageUrl());
         h.name.setText(l.getName());
         h.vendor.setText(row.vendorName + " · " + l.getLocation());
         h.price.setText(PriceFormat.format(l.getDiscountedPrice()));

@@ -63,7 +63,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Row> {
         for (int i = 0; i < 5; i++) stars.append(i < r.getRating() ? "★" : "☆");
         h.stars.setText(stars.toString());
         h.text.setText(r.getText());
-        h.user.setText("Sample review (demo) · " + r.getUserId());
+        String who = r.getUserName().isEmpty()
+                ? (r.getUserId().isEmpty() ? "Customer" : r.getUserId()) : r.getUserName();
+        h.user.setText(who);
         h.status.setText(r.getStatus().name());
         int color;
         if (r.getStatus() == ReviewStatus.VISIBLE) {

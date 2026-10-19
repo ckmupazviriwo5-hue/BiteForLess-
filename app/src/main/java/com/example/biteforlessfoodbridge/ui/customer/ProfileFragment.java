@@ -16,8 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.biteforlessfoodbridge.LoginActivity;
 import com.example.biteforlessfoodbridge.R;
 import com.example.biteforlessfoodbridge.data.SessionManager;
-import com.example.biteforlessfoodbridge.data.remote.SupabaseAuth;
-import com.example.biteforlessfoodbridge.data.remote.SupabaseConfig;
+import com.example.biteforlessfoodbridge.data.remote.AuthGateway;
 import com.example.biteforlessfoodbridge.util.Validation;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -41,7 +40,14 @@ public class ProfileFragment extends Fragment {
 
         name.setText(session.getName());
         email.setText(session.getEmail());
-        role.setText("Role: " + session.getRole().name() + " (demo)");
+        boolean liveBackend = AuthGateway.isLive(requireContext());
+        role.setText("Role: " + session.getRole().name() + (liveBackend ? "" : " (demo)"));
+        if (liveBackend) {
+            // Profile fields are server-owned on a live backend — read-only here.
+            name.setEnabled(false);
+            email.setEnabled(false);
+            save.setEnabled(false);
+        }
 
         save.setOnClickListener(v -> {
             String newName = name.getText() == null ? "" : name.getText().toString().trim();
@@ -62,8 +68,8 @@ public class ProfileFragment extends Fragment {
 
         signOut.setOnClickListener(v -> {
             session.signOut();
-            if (SupabaseConfig.isConfigured()) {
-                new SupabaseAuth(requireContext()).signOut();
+            if (AuthGateway.isLive(requireContext())) {
+                AuthGateway.auth(requireContext()).signOut();
             }
             startActivity(new Intent(requireContext(), LoginActivity.class));
             requireActivity().finish();

@@ -39,7 +39,7 @@ public class AdminCustomerAdapter extends RecyclerView.Adapter<AdminCustomerAdap
     @Override
     public void onBindViewHolder(@NonNull Row h, int position) {
         AdminStats.CustomerSummary c = rows.get(position);
-        h.id.setText(c.userId);
+        h.id.setText(c.label.isEmpty() ? c.userId : c.label);
         h.stats.setText(c.reservations + " reservations · " + c.completed + " completed");
         SimpleDateFormat fmt = new SimpleDateFormat("EEE d MMM, HH:mm", Locale.getDefault());
         h.last.setText("Last activity: " + (c.lastEpoch > 0

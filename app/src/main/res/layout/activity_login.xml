@@ -81,16 +81,17 @@
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/password_layout" />
 
-    <TextView
-        android:id="@+id/btn_goto_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btn_google"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:layout_marginTop="16dp"
-        android:text="Don't have an account? Sign Up"
-        android:textColor="@color/food_yellow"
+        android:text="Continue with Google"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/role_label" />
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <TextView
         android:id="@+id/role_label"
@@ -102,7 +103,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_goto_signup" />
+        app:layout_constraintTop_toBottomOf="@id/btn_google" />
 
     <RadioGroup
         android:id="@+id/role_group"
@@ -140,14 +141,13 @@
             android:textColor="@color/white" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/btn_google"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="16dp"
-        android:text="Continue with Google"
-        android:visibility="gone"
+    <TextView
+        android:id="@+id/btn_goto_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Don't have an account? Sign Up"
+        android:textColor="@color/food_yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/role_group" />

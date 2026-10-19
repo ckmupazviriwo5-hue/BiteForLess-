@@ -72,6 +72,11 @@ public class SupabaseAuth {
         return prefs().getString(KEY_EMAIL, "");
     }
 
+    /** Display name of the signed-in user ("" when unknown; overridden per backend). */
+    public String displayName() {
+        return "";
+    }
+
     public void signOut() {
         prefs().edit().clear().apply();
     }
@@ -91,6 +96,12 @@ public class SupabaseAuth {
     }
 
     // ---- email/password ----
+
+    /** Phone variant (the local API requires a phone); hosted GoTrue ignores it. */
+    public void signUp(String name, String email, String phone, String password,
+                       SupaResult<String> cb) {
+        signUp(name, email, password, cb);
+    }
 
     public void signUp(String name, String email, String password, SupaResult<String> cb) {
         try {

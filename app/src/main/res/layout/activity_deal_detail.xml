@@ -212,7 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_sm"
-            android:text="Demo reservation only — no payment, no secure pickup code."
+            android:text="No payment online — show the reference and PIN at pickup."
             android:textAppearance="@style/TextAppearance.BiteForLess.Body"
             android:textSize="12sp" />
 

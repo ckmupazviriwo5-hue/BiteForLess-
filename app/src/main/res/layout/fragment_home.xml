@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_md"
-            android:text="Discounted pickups from local vendors (demo)."
+            android:text="Discounted pickups from local vendors."
             android:textAppearance="@style/TextAppearance.BiteForLess.Body" />
 
         <TextView
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xs"
-                android:text="Check back later or reset the demo data."
+                android:text="Check back later."
                 android:textAppearance="@style/TextAppearance.BiteForLess.Body" />
         </LinearLayout>
 

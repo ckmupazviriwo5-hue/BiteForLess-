@@ -27,6 +27,7 @@ public final class AdminStats {
         public int totalVendors;
         public int approvedVendors;
         public int pendingVendors;
+        public int rejectedVendors;
         public int suspendedVendors;
         public int totalListings;
         public int activeListings;
@@ -40,9 +41,11 @@ public final class AdminStats {
         public int reviewsHidden;
     }
 
-    /** Observed demo customer: derived from reservation records only. */
+    /** A customer account, joined with its observed reservation activity. */
     public static class CustomerSummary {
         public final String userId;
+        /** Display name/email from the user directory when available. */
+        public String label = "";
         public int reservations;
         public int completed;
         public long lastEpoch;
@@ -63,6 +66,7 @@ public final class AdminStats {
                 if (v == null || v.getStatus() == null) continue;
                 if (v.getStatus() == VendorStatus.APPROVED) s.approvedVendors++;
                 else if (v.getStatus() == VendorStatus.PENDING) s.pendingVendors++;
+                else if (v.getStatus() == VendorStatus.REJECTED) s.rejectedVendors++;
                 else if (v.getStatus() == VendorStatus.SUSPENDED) s.suspendedVendors++;
             }
         }

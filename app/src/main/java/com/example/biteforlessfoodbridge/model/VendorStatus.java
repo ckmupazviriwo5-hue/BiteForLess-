@@ -1,8 +1,9 @@
 package com.example.biteforlessfoodbridge.model;
 
-/** Simulated vendor approval state (demo only, not secure authorization). */
+/** Vendor approval state as tracked by the platform (server-authoritative). */
 public enum VendorStatus {
     PENDING,
     APPROVED,
+    REJECTED,
     SUSPENDED
 }

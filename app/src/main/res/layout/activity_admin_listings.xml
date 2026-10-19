@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/surface"
         app:navigationIcon="@drawable/ic_logo_bite"
-        app:title="Listings (demo)"
+        app:title="Listings"
         app:titleTextColor="@color/on_background" />
 
     <com.google.android.material.textfield.TextInputLayout

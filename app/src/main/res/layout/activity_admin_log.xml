@@ -12,14 +12,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/surface"
         app:navigationIcon="@drawable/ic_logo_bite"
-        app:title="Activity log (demo)"
+        app:title="Activity log"
         app:titleTextColor="@color/on_background" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_md"
-        android:text="Actions performed this session. Seeded demo records are marked as samples."
+        android:text="Actions performed in this app session."
         android:textAppearance="@style/TextAppearance.BiteForLess.Body"
         android:textSize="12sp" />
 

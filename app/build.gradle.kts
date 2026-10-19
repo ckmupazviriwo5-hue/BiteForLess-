@@ -34,6 +34,10 @@ android {
         // Empty values = local demo mode (existing in-memory repository).
         buildConfigField("String", "SUPABASE_URL", "\"${supaProp("supabase.url")}\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"${supaProp("supabase.anonKey")}\"")
+        // Local-first Express + SQLite API (the active backend for this build).
+        // Set in local.properties: api.baseUrl — emulator default 10.0.2.2 maps to
+        // the host machine's localhost; physical devices use the host LAN IP.
+        buildConfigField("String", "API_BASE_URL", "\"${supaProp("api.baseUrl")}\"")
     }
 
     buildTypes {
@@ -67,6 +71,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.security.crypto)
     implementation(libs.browser)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     testImplementation(libs.junit)
     testImplementation(libs.room.testing)
     testImplementation(libs.robolectric)

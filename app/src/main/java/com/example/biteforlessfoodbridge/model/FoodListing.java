@@ -78,4 +78,12 @@ public class FoodListing {
     public boolean isReservable(long nowEpoch) {
         return status == ListingStatus.ACTIVE && availableQuantity > 0 && !isExpired(nowEpoch);
     }
+
+    /** Absolute URL of the listing photo ("" when the record has none). */
+    private String imageUrl = "";
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl == null ? "" : imageUrl;
+    }
 }

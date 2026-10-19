@@ -31,11 +31,19 @@ public class VendorReservationAdapter extends RecyclerView.Adapter<VendorReserva
         public final Reservation reservation;
         public final String listingName;
         public final long deadlineEpoch;
+        /** Customer display name when the backend provides one ("" in demo). */
+        public final String customerName;
 
         public VendorResRow(Reservation reservation, String listingName, long deadlineEpoch) {
+            this(reservation, listingName, deadlineEpoch, "");
+        }
+
+        public VendorResRow(Reservation reservation, String listingName, long deadlineEpoch,
+                            String customerName) {
             this.reservation = reservation;
             this.listingName = listingName;
             this.deadlineEpoch = deadlineEpoch;
+            this.customerName = customerName == null ? "" : customerName;
         }
     }
 
@@ -65,9 +73,12 @@ public class VendorReservationAdapter extends RecyclerView.Adapter<VendorReserva
         VendorResRow row = rows.get(position);
         Reservation r = row.reservation;
 
-        h.ref.setText(r.getId() + " · " + r.getPickupCode());
+        h.ref.setText(r.getPickupCode().isEmpty() ? r.getId() : r.getPickupCode());
         h.title.setText(row.listingName + " × " + r.getQuantity());
-        h.customer.setText("Customer (demo): " + r.getUserId());
+        // NEVER render the pickup PIN here — the vendor must collect it from
+        // the customer at verification time (contract §6).
+        String who = row.customerName.isEmpty() ? "Customer" : row.customerName;
+        h.customer.setText("Customer: " + who);
         SimpleDateFormat fmt = new SimpleDateFormat("EEE d MMM, HH:mm", Locale.getDefault());
         h.meta.setText("Booked " + fmt.format(new Date(r.getCreatedAtEpoch()))
                 + " · " + DateTimeUtil.formatDeadline(row.deadlineEpoch));
@@ -89,6 +100,7 @@ public class VendorReservationAdapter extends RecyclerView.Adapter<VendorReserva
         h.status.setTextColor(color);
 
         boolean canComplete = r.getStatus() == ReservationStatus.RESERVED;
+        h.complete.setText("Verify pickup");
         h.complete.setVisibility(canComplete ? View.VISIBLE : View.GONE);
         h.complete.setOnClickListener(canComplete ? v -> {
             if (listener != null) listener.onComplete(r);
